@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rede Bom Retiro - Funcionários</title>
+    <title>Rede Bom Retiro - Escalômetro</title>
     <style>
         :root {
-            --primary-color: #d97706; /* Cor de Posto/Combustível */
+            --primary-color: #d97706;
             --secondary-color: #1e293b;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
@@ -69,6 +69,25 @@
             align-items: center;
         }
 
+        /* Indicador de campo editável ao passar o mouse */
+        [contenteditable="true"] {
+            outline: 1px dashed transparent;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        [contenteditable="true"]:hover {
+            background-color: #f1f5f9;
+            outline: 1px dashed var(--primary-color);
+            cursor: pointer;
+        }
+
+        [contenteditable="true"]:focus {
+            background-color: #fff;
+            outline: 2px solid var(--primary-color);
+        }
+
         .card {
             background: var(--card-bg);
             border-radius: 10px;
@@ -97,7 +116,6 @@
             border-radius: 12px;
             font-size: 0.75rem;
             color: #475569;
-            text-transform: capitalize;
         }
 
         .card-body {
@@ -146,6 +164,21 @@
             color: #b91c1c;
         }
 
+        .reset-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .btn-reset {
+            background: transparent;
+            border: 1px solid #94a3b8;
+            color: #64748b;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         footer {
             text-align: center;
             padding: 10px;
@@ -159,94 +192,98 @@
 
     <div class="container">
         <header>
-            <h1>Rede Bom Retiro</h1>
-            <p>Escala de Funcionários</p>
+            <h1 contenteditable="true" id="editable-title">Rede Bom Retiro</h1>
+            <p contenteditable="true" id="editable-subtitle">Escala de Funcionários</p>
         </header>
 
         <div class="content">
             <div class="section-title">
                 <span>📅 Plantão de Hoje</span>
-                <span id="current-date" style="font-weight: normal; font-size: 0.8rem;">Carregando data...</span>
+                <span id="current-date" contenteditable="true" style="font-weight: normal; font-size: 0.8rem;">Clique para editar a data...</span>
             </div>
 
-            <!-- Funcionário 1 -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="employee-name">Carlos Cristiano</span>
-                    <span class="badge-month"></span>
+            <!-- Lista de Funcionários Editáveis -->
+            <div id="employees-list">
+                
+                <div class="card" data-id="carlos">
+                    <div class="card-header">
+                        <span class="employee-name" contenteditable="true" id="name-carlos">Carlos Cristiano</span>
+                        <span class="badge-month" contenteditable="true" id="month-carlos">Julho / 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <p>🕒 <strong>Horário:</strong> <span contenteditable="true" id="hours-carlos">06:00 às 14:00</span></p>
+                        <p>📆 <strong>Dias:</strong> <span contenteditable="true" id="days-carlos">Segunda a Sexta</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="checkin-label">Check-in Presença:</span>
+                        <button class="btn-checkin unchecked" data-id="carlos" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p>🕒 <strong>Horário:</strong> 06:00 às 14:00</p>
-                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
+
+                <div class="card" data-id="italo">
+                    <div class="card-header">
+                        <span class="employee-name" contenteditable="true" id="name-italo">Italo</span>
+                        <span class="badge-month" contenteditable="true" id="month-italo">Julho / 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <p>🕒 <strong>Horário:</strong> <span contenteditable="true" id="hours-italo">06:00 às 14:00</span></p>
+                        <p>📆 <strong>Dias:</strong> <span contenteditable="true" id="days-italo">Segunda a Sexta</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="checkin-label">Check-in Presença:</span>
+                        <button class="btn-checkin unchecked" data-id="italo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <span class="checkin-label">Check-in Presença:</span>
-                    <button class="btn-checkin unchecked" data-id="carlos-cristiano" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+
+                <div class="card" data-id="ezequiel">
+                    <div class="card-header">
+                        <span class="employee-name" contenteditable="true" id="name-ezequiel">Ezequiel</span>
+                        <span class="badge-month" contenteditable="true" id="month-ezequiel">Julho / 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <p>🕒 <strong>Horário:</strong> <span contenteditable="true" id="hours-ezequiel">14:00 às 22:00</span></p>
+                        <p>📆 <strong>Dias:</strong> <span contenteditable="true" id="days-ezequiel">Segunda a Sexta</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="checkin-label">Check-in Presença:</span>
+                        <button class="btn-checkin unchecked" data-id="ezequiel" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                    </div>
                 </div>
+
+                <div class="card" data-id="toco">
+                    <div class="card-header">
+                        <span class="employee-name" contenteditable="true" id="name-toco">Toco</span>
+                        <span class="badge-month" contenteditable="true" id="month-toco">Julho / 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <p>🕒 <strong>Horário:</strong> <span contenteditable="true" id="hours-toco">14:00 às 22:00</span></p>
+                        <p>📆 <strong>Dias:</strong> <span contenteditable="true" id="days-toco">Segunda a Sexta</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="checkin-label">Check-in Presença:</span>
+                        <button class="btn-checkin unchecked" data-id="toco" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                    </div>
+                </div>
+
+                <div class="card" data-id="murilo">
+                    <div class="card-header">
+                        <span class="employee-name" contenteditable="true" id="name-murilo">Murilo</span>
+                        <span class="badge-month" contenteditable="true" id="month-murilo">Julho / 2026</span>
+                    </div>
+                    <div class="card-body">
+                        <p>🕒 <strong>Horário:</strong> <span contenteditable="true" id="hours-murilo">22:00 às 06:00</span></p>
+                        <p>📆 <strong>Dias:</strong> <span contenteditable="true" id="days-murilo">Escala 12x36</span></p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="checkin-label">Check-in Presença:</span>
+                        <button class="btn-checkin unchecked" data-id="murilo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Funcionário 2 -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="employee-name">Italo</span>
-                    <span class="badge-month"></span>
-                </div>
-                <div class="card-body">
-                    <p>🕒 <strong>Horário:</strong> 06:00 às 14:00</p>
-                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
-                </div>
-                <div class="card-footer">
-                    <span class="checkin-label">Check-in Presença:</span>
-                    <button class="btn-checkin unchecked" data-id="italo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
-                </div>
-            </div>
-
-            <!-- Funcionário 3 -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="employee-name">Ezequiel</span>
-                    <span class="badge-month"></span>
-                </div>
-                <div class="card-body">
-                    <p>🕒 <strong>Horário:</strong> 14:00 às 22:00</p>
-                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
-                </div>
-                <div class="card-footer">
-                    <span class="checkin-label">Check-in Presença:</span>
-                    <button class="btn-checkin unchecked" data-id="ezequiel" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
-                </div>
-            </div>
-
-            <!-- Funcionário 4 -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="employee-name">Toco</span>
-                    <span class="badge-month"></span>
-                </div>
-                <div class="card-body">
-                    <p>🕒 <strong>Horário:</strong> 14:00 às 22:00</p>
-                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
-                </div>
-                <div class="card-footer">
-                    <span class="checkin-label">Check-in Presença:</span>
-                    <button class="btn-checkin unchecked" data-id="toco" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
-                </div>
-            </div>
-
-            <!-- Funcionário 5 -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="employee-name">Murilo</span>
-                    <span class="badge-month"></span>
-                </div>
-                <div class="card-body">
-                    <p>🕒 <strong>Horário:</strong> 22:00 às 06:00</p>
-                    <p>📆 <strong>Dias:</strong> Escala 12x36</p>
-                </div>
-                <div class="card-footer">
-                    <span class="checkin-label">Check-in Presença:</span>
-                    <button class="btn-checkin unchecked" data-id="murilo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
-                </div>
+            <div class="reset-container">
+                <button class="btn-reset" onclick="resetToDefaults()">🔄 Redefinir para valores originais</button>
             </div>
 
         </div>
@@ -258,24 +295,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const now = new Date();
+            loadSavedContent();
 
-            // Formata a data completa do topo
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').innerText = now.toLocaleDateString('pt-BR', dateOptions);
-
-            // Formata o mês e ano para os badges dinamicamente
-            const monthOptions = { month: 'long', year: 'numeric' };
-            const monthString = now.toLocaleDateString('pt-BR', monthOptions);
-            
-            document.querySelectorAll('.badge-month').forEach(badge => {
-                badge.innerText = monthString;
+            // Salva alterações de texto automaticamente
+            document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+                element.addEventListener('input', () => {
+                    if (element.id) {
+                        localStorage.setItem(`editable_${element.id}`, element.innerText);
+                    }
+                });
             });
 
-            // Atualiza o ano no footer
-            document.getElementById('current-year').innerText = now.getFullYear();
-
-            // Restaura estado salvo do LocalStorage
+            // Carrega estado dos botões de check-in
             document.querySelectorAll('.btn-checkin').forEach(button => {
                 const id = button.getAttribute('data-id');
                 const savedState = localStorage.getItem(`checkin_${id}`);
@@ -285,11 +316,21 @@
             });
         });
 
+        function loadSavedContent() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+                if (element.id) {
+                    const savedText = localStorage.getItem(`editable_${element.id}`);
+                    if (savedText !== null) {
+                        element.innerText = savedText;
+                    }
+                }
+            });
+        }
+
         function toggleCheckin(button) {
             const isChecked = button.classList.contains('checked');
             setButtonChecked(button, !isChecked);
 
-            // Salva no localStorage
             const id = button.getAttribute('data-id');
             localStorage.setItem(`checkin_${id}`, !isChecked ? 'checked' : 'unchecked');
         }
@@ -305,6 +346,17 @@
                 button.classList.add('unchecked');
                 button.innerHTML = '❌ Não trabalhou';
                 button.setAttribute('aria-pressed', 'false');
+            }
+        }
+
+        function resetToDefaults() {
+            if (confirm('Tem certeza que deseja redefinir todas as alterações editadas?')) {
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('editable_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                location.reload();
             }
         }
     </script>
