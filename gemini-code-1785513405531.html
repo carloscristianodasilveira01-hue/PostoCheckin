@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rede Bom Retiro - Funcionários</title>
+    <style>
+        :root {
+            --primary-color: #d97706; /* Cor de Posto/Combustível */
+            --secondary-color: #1e293b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-color);
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .content {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .employee-name {
+            font-weight: bold;
+            font-size: 1.05rem;
+            color: var(--secondary-color);
+        }
+
+        .badge-month {
+            background: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #475569;
+            text-transform: capitalize;
+        }
+
+        .card-body {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: #64748b;
+        }
+
+        .card-body p {
+            margin: 4px 0;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+        }
+
+        .checkin-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-checkin {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-checkin.checked {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .btn-checkin.unchecked {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Rede Bom Retiro</h1>
+            <p>Escala de Funcionários</p>
+        </header>
+
+        <div class="content">
+            <div class="section-title">
+                <span>📅 Plantão de Hoje</span>
+                <span id="current-date" style="font-weight: normal; font-size: 0.8rem;">Carregando data...</span>
+            </div>
+
+            <!-- Funcionário 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="employee-name">Carlos Cristiano</span>
+                    <span class="badge-month"></span>
+                </div>
+                <div class="card-body">
+                    <p>🕒 <strong>Horário:</strong> 06:00 às 14:00</p>
+                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
+                </div>
+                <div class="card-footer">
+                    <span class="checkin-label">Check-in Presença:</span>
+                    <button class="btn-checkin unchecked" data-id="carlos-cristiano" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                </div>
+            </div>
+
+            <!-- Funcionário 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="employee-name">Italo</span>
+                    <span class="badge-month"></span>
+                </div>
+                <div class="card-body">
+                    <p>🕒 <strong>Horário:</strong> 06:00 às 14:00</p>
+                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
+                </div>
+                <div class="card-footer">
+                    <span class="checkin-label">Check-in Presença:</span>
+                    <button class="btn-checkin unchecked" data-id="italo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                </div>
+            </div>
+
+            <!-- Funcionário 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="employee-name">Ezequiel</span>
+                    <span class="badge-month"></span>
+                </div>
+                <div class="card-body">
+                    <p>🕒 <strong>Horário:</strong> 14:00 às 22:00</p>
+                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
+                </div>
+                <div class="card-footer">
+                    <span class="checkin-label">Check-in Presença:</span>
+                    <button class="btn-checkin unchecked" data-id="ezequiel" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                </div>
+            </div>
+
+            <!-- Funcionário 4 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="employee-name">Toco</span>
+                    <span class="badge-month"></span>
+                </div>
+                <div class="card-body">
+                    <p>🕒 <strong>Horário:</strong> 14:00 às 22:00</p>
+                    <p>📆 <strong>Dias:</strong> Segunda a Sexta</p>
+                </div>
+                <div class="card-footer">
+                    <span class="checkin-label">Check-in Presença:</span>
+                    <button class="btn-checkin unchecked" data-id="toco" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                </div>
+            </div>
+
+            <!-- Funcionário 5 -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="employee-name">Murilo</span>
+                    <span class="badge-month"></span>
+                </div>
+                <div class="card-body">
+                    <p>🕒 <strong>Horário:</strong> 22:00 às 06:00</p>
+                    <p>📆 <strong>Dias:</strong> Escala 12x36</p>
+                </div>
+                <div class="card-footer">
+                    <span class="checkin-label">Check-in Presença:</span>
+                    <button class="btn-checkin unchecked" data-id="murilo" aria-pressed="false" onclick="toggleCheckin(this)">❌ Não trabalhou</button>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            Rede Bom Retiro &copy; <span id="current-year">2026</span> - Uso Interno
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+
+            // Formata a data completa do topo
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').innerText = now.toLocaleDateString('pt-BR', dateOptions);
+
+            // Formata o mês e ano para os badges dinamicamente
+            const monthOptions = { month: 'long', year: 'numeric' };
+            const monthString = now.toLocaleDateString('pt-BR', monthOptions);
+            
+            document.querySelectorAll('.badge-month').forEach(badge => {
+                badge.innerText = monthString;
+            });
+
+            // Atualiza o ano no footer
+            document.getElementById('current-year').innerText = now.getFullYear();
+
+            // Restaura estado salvo do LocalStorage
+            document.querySelectorAll('.btn-checkin').forEach(button => {
+                const id = button.getAttribute('data-id');
+                const savedState = localStorage.getItem(`checkin_${id}`);
+                if (savedState === 'checked') {
+                    setButtonChecked(button, true);
+                }
+            });
+        });
+
+        function toggleCheckin(button) {
+            const isChecked = button.classList.contains('checked');
+            setButtonChecked(button, !isChecked);
+
+            // Salva no localStorage
+            const id = button.getAttribute('data-id');
+            localStorage.setItem(`checkin_${id}`, !isChecked ? 'checked' : 'unchecked');
+        }
+
+        function setButtonChecked(button, checked) {
+            if (checked) {
+                button.classList.remove('unchecked');
+                button.classList.add('checked');
+                button.innerHTML = '✅ Trabalhou';
+                button.setAttribute('aria-pressed', 'true');
+            } else {
+                button.classList.remove('checked');
+                button.classList.add('unchecked');
+                button.innerHTML = '❌ Não trabalhou';
+                button.setAttribute('aria-pressed', 'false');
+            }
+        }
+    </script>
+</body>
+</html>
